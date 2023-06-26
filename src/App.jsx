@@ -1,4 +1,5 @@
 import * as React from 'react'
+import PropTypes from 'prop-types'
 import './App.css'
 
 const ACTIONS = {
@@ -67,6 +68,122 @@ const formReducer = (formState, action) => {
   }
 }
 
+const Form = ({ onSubmit, form, dispatch, isSubmitDisabled }) => {
+  return (
+    <form onSubmit={onSubmit}>
+      <div className="field__wrapper">
+        <div className="input__wrapper">
+          <label className="" htmlFor="startDate">
+            Start Date
+          </label>
+          <input
+            name="startDate"
+            value={form.startDate.value}
+            onChange={({ target: { value } }) =>
+              dispatch({ type: ACTIONS.START_DATE_UPDATE, payload: value })
+            }
+            required={form.startDate.required}
+          />
+        </div>
+        <div className="input__wrapper">
+          <label className="label__input" htmlFor="endDate">
+            End Date
+          </label>
+          <input
+            name="endDate"
+            value={form.endDate.value}
+            onChange={({ target: { value } }) =>
+              dispatch({ type: ACTIONS.END_DATE_UPDATE, payload: value })
+            }
+            required={form.endDate.required}
+          />
+        </div>
+      </div>
+      <div className="field__wrapper">
+        <div className="input__wrapper">
+          <label className="label__input" htmlFor="morningShiftHigh">
+            Morning Shift
+          </label>
+          <input
+            name="morningShiftHigh"
+            value={form.morningShiftHigh.value}
+            onChange={({ target: { value } }) =>
+              dispatch({
+                type: ACTIONS.MORNING_SHIFT_HIGH_UPDATE,
+                payload: value,
+              })
+            }
+            required={form.morningShiftHigh.required}
+          />
+        </div>
+        <div className="input__wrapper">
+          <label className="label__input" htmlFor="afternoonShiftHigh">
+            Afternoon Shift
+          </label>
+          <input
+            name="afternoonShiftHigh"
+            value={form.afternoonShiftHigh.value}
+            onChange={({ target: { value } }) =>
+              dispatch({
+                type: ACTIONS.AFTERNOON_SHIFT_HIGH_UPDATE,
+                payload: value,
+              })
+            }
+            required={form.afternoonShiftHigh.required}
+          />
+        </div>
+      </div>
+      <div className="field__wrapper">
+        <div className="input__wrapper">
+          <label className="label__input" htmlFor="morningShiftLow">
+            Morning Shift
+          </label>
+          <input
+            name="morningShiftLow"
+            value={form.morningShiftLow.value}
+            onChange={({ target: { value } }) =>
+              dispatch({
+                type: ACTIONS.MORNING_SHIFT_LOW_UPDATE,
+                payload: value,
+              })
+            }
+            required={form.morningShiftLow.required}
+          />
+        </div>
+        <div className="input__wrapper">
+          <label className="label__input" htmlFor="afternoonShiftLow">
+            Afternoon Shift
+          </label>
+          <input
+            name="afternoonShiftLow"
+            value={form.afternoonShiftLow.value}
+            onChange={({ target: { value } }) =>
+              dispatch({
+                type: ACTIONS.AFTERNOON_SHIFT_LOW_UPDATE,
+                payload: value,
+              })
+            }
+            required={form.afternoonShiftLow.required}
+          />
+        </div>
+      </div>
+      <input
+        type="submit"
+        onClick={onSubmit}
+        value="Submit"
+        disabled={!isSubmitDisabled}
+      />
+    </form>
+  )
+}
+
+Form.propTypes = {
+  onSubmit: PropTypes.func,
+  dispatch: PropTypes.func,
+  form: PropTypes.object,
+  isSubmitDisabled: PropTypes.bool,
+}
+
 function App() {
   const [form, dispatch] = React.useReducer(formReducer, {
     startDate: {
@@ -111,110 +228,12 @@ function App() {
   return (
     <>
       <h1>Forms test</h1>
-      <form onSubmit={onSubmit}>
-        <div className="field__wrapper">
-          <div className="input__wrapper">
-            <label className="" htmlFor="startDate">
-              Start Date
-            </label>
-            <input
-              name="startDate"
-              value={form.startDate.value}
-              onChange={({ target: { value } }) =>
-                dispatch({ type: ACTIONS.START_DATE_UPDATE, payload: value })
-              }
-              required={form.startDate.required}
-            />
-          </div>
-          <div className="input__wrapper">
-            <label className="label__input" htmlFor="endDate">
-              End Date
-            </label>
-            <input
-              name="endDate"
-              value={form.endDate.value}
-              onChange={({ target: { value } }) =>
-                dispatch({ type: ACTIONS.END_DATE_UPDATE, payload: value })
-              }
-              required={form.endDate.required}
-            />
-          </div>
-        </div>
-        <div className="field__wrapper">
-          <div className="input__wrapper">
-            <label className="label__input" htmlFor="morningShiftHigh">
-              Morning Shift
-            </label>
-            <input
-              name="morningShiftHigh"
-              value={form.morningShiftHigh.value}
-              onChange={({ target: { value } }) =>
-                dispatch({
-                  type: ACTIONS.MORNING_SHIFT_HIGH_UPDATE,
-                  payload: value,
-                })
-              }
-              required={form.morningShiftHigh.required}
-            />
-          </div>
-          <div className="input__wrapper">
-            <label className="label__input" htmlFor="afternoonShiftHigh">
-              Afternoon Shift
-            </label>
-            <input
-              name="afternoonShiftHigh"
-              value={form.afternoonShiftHigh.value}
-              onChange={({ target: { value } }) =>
-                dispatch({
-                  type: ACTIONS.AFTERNOON_SHIFT_HIGH_UPDATE,
-                  payload: value,
-                })
-              }
-              required={form.afternoonShiftHigh.required}
-            />
-          </div>
-        </div>
-        <div className="field__wrapper">
-          <div className="input__wrapper">
-            <label className="label__input" htmlFor="morningShiftLow">
-              Morning Shift
-            </label>
-            <input
-              name="morningShiftLow"
-              value={form.morningShiftLow.value}
-              onChange={({ target: { value } }) =>
-                dispatch({
-                  type: ACTIONS.MORNING_SHIFT_LOW_UPDATE,
-                  payload: value,
-                })
-              }
-              required={form.morningShiftLow.required}
-            />
-          </div>
-          <div className="input__wrapper">
-            <label className="label__input" htmlFor="afternoonShiftLow">
-              Afternoon Shift
-            </label>
-            <input
-              name="afternoonShiftLow"
-              value={form.afternoonShiftLow.value}
-              onChange={({ target: { value } }) =>
-                dispatch({
-                  type: ACTIONS.AFTERNOON_SHIFT_LOW_UPDATE,
-                  payload: value,
-                })
-              }
-              required={form.afternoonShiftLow.required}
-            />
-          </div>
-        </div>
-        <input
-          type="submit"
-          onClick={onSubmit}
-          value="Submit"
-          disabled={!areNsdConfigurationModalRequiedFieldFilled}
-        />
-      </form>
+      <Form
+        form={form}
+        dispatch={dispatch}
+        onSubmit={onSubmit}
+        isSubmitDisabled={areNsdConfigurationModalRequiedFieldFilled}
+      />
     </>
   )
 }
